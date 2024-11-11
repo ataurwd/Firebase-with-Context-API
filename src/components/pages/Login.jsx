@@ -1,14 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { FormContext } from '../Context/Provider';
 
 const Login = () => {
 
-
+    const {signInUser} = useContext(FormContext)
     const handelLogin = e => {
         e.preventDefault();
         const email = e.target.email.value;
         const password = e.target.password.value;
         console.log(email, password);
+
+        signInUser(email, password)
+        .then(res => {
+            console.log(res.user)
+        })
+        .catch((err) => {
+            console.error(err.message);
+        })
+
 
     }
     return (
@@ -28,7 +38,7 @@ const Login = () => {
                 {/* form side  */}
                 <div className="flex w-full flex-col justify-center bg-white py-10 lg:w-[60%] dark:bg-zinc-900">
                     <h2 className="pb-8 text-center text-3xl font-semibold tracking-tight text-blue-400">Sign In</h2>
-                    <form className="flex w-full flex-col items-center justify-center gap-4">
+                    <form onSubmit={handelLogin} className="flex w-full flex-col items-center justify-center gap-4">
                         <input
                             className="w-[80%] rounded-lg border border-blue-400 bg-transparent py-2 pl-4 text-zinc-600 focus:outline-none focus:ring-2 focus:ring-blue-300/50 md:w-[60%] dark:text-zinc-400"
                             type="email"

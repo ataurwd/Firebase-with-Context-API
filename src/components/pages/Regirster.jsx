@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { FormContext } from '../Context/Provider';
+import { updateProfile } from 'firebase/auth';
+import auth from '../../firebase.init';
 
 const Regirster = () => {
+
+    const {createUser} = useContext(FormContext)
 
     const handelRegister = e => {
         e.preventDefault();
@@ -9,6 +14,19 @@ const Regirster = () => {
         const email = e.target.email.value;
         const password = e.target.password.value;
         console.log(name, email, password);
+
+        createUser(email, password)
+       .then((res) => {
+        console.log(res.user)
+        const profile = {
+            displayName: name,
+        }
+        updateProfile(auth.currentUser, profile)
+        .then(() => {
+            
+        })
+       })
+       .catch(err => console.error(err));
     }
     return (
         <div className="max-w-md lg:mx-auto my-6 space-y-6 rounded-lg border bg-white p-10 shadow-lg dark:border-zinc-700 dark:bg-zinc-900">

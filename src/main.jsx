@@ -7,7 +7,7 @@ import Login from './components/pages/Login';
 import Regirster from './components/pages/Regirster';
 import Layout from './components/pages/Layout'
 import Contact from './components/pages/Contact';
-import { FormContext } from './components/Context/Provider';
+import Provider, { FormContext } from './components/Context/Provider';
 
 
 const route = createBrowserRouter([
@@ -37,8 +37,8 @@ const route = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-   <FormContext>
+    <Provider>
     <RouterProvider router={route}/>
-   </FormContext>
+    </Provider>
   </StrictMode>,
 )

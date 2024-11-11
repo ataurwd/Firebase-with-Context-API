@@ -1,7 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { FormContext } from '../Context/Provider';
 
 const Navbar = () => {
+
+  const {user, singOutUser} = useContext(FormContext)
+
+  const handelSignOut = () => {
+    singOutUser()
+    .then(() => {
+
+    })
+    .catch((err) => {
+      console.error(err);
+      // Handle the error here
+    })
+  }
+  // console.log(tryContext.name)
     return (
     <nav className="bg-gray-800 text-white px-4 py-3 flex justify-between items-center">
       {/* Logo */}
@@ -20,10 +35,18 @@ const Navbar = () => {
       </div>
 
       {/* Button */}
-      <div>
+      <div className='space-x-5'>
         <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
-          Sign Up
+          {user?.displayName}
         </button>
+
+         {
+           user ? 
+           <button 
+           onClick={handelSignOut}
+           className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Sign Out</button> 
+           :<Link to={"/login"}>Login</Link> 
+         }
       </div>
     </nav>
     );
